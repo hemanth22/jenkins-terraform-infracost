@@ -35,6 +35,8 @@ jobs:
           pwd
           echo $GITHUB_WORKSPACE
           ls -ltr $GITHUB_WORKSPACE
+          echo $GITHUB_PATH
+          ls -ltr $GITHUB_PATH
 
       - name: Setup Infracost
         uses: infracost/actions/setup@v2
