@@ -42,7 +42,7 @@ jobs:
       # Generate Infracost JSON file as the baseline.
       - name: Generate Infracost cost estimate baseline
         run: |
-          infracost breakdown --path=${GITHUB_ACTION_PATH} \
+          infracost breakdown --path=. \
                               --format=json \
                               --out-file=/tmp/infracost-base.json
 
