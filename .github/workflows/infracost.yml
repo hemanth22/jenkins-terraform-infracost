@@ -41,18 +41,6 @@ jobs:
         with:
           ref: '${{ github.event.pull_request.base.ref }}'
 
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
-          pwd
-          echo $GITHUB_WORKSPACE
-          ls -ltr $GITHUB_WORKSPACE
-          echo $GITHUB_PATH
-          ls -ltr $GITHUB_PATH
-          echo $TF_ROOT
-          ls -ltr $TF_ROOT
-
       # Generate Infracost JSON file as the baseline.
       - name: Generate Infracost cost estimate baseline
         run: |
