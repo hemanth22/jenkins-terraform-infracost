@@ -46,4 +46,4 @@ jobs:
 
       - name: comment infracost
         run: |
-          infracost comment github --path infracost.json --repo $GITHUB_REPOSITORY --pull-request 2 --github-token $GITHUB_TOKEN --behavior update
+          infracost comment github --path ./infracost.json --repo $GITHUB_REPOSITORY --pull-request 2 --github-token $GITHUB_TOKEN --behavior update
