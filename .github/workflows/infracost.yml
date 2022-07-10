@@ -62,7 +62,7 @@ jobs:
 
       - name: configure infracost
         run: |
-          infracost breakdown --path=. --format=json --out-file=/tmp/infracost-base.json
+          infracost breakdown --path=./jenkins.plan --format=json --out-file=/tmp/infracost-base.json
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
