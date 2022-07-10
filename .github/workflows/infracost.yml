@@ -43,7 +43,11 @@ jobs:
       - name: configure infracost
         run: |
           infracost breakdown --path=. --format=json --out-file=/tmp/infracost-base.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: comment infracost
         run: |
           infracost comment github --path /tmp/infracost-base.json --repo $GITHUB_REPOSITORY --pull-request 2 --github-token $GITHUB_TOKEN --behavior update
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
