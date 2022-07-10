@@ -34,14 +34,8 @@ jobs:
 
       - name: configure infracost
         run: |
-          infracost breakdown --path=. \
-                              --format=json \
-                              --out-file=/tmp/infracost-base.json
+          infracost breakdown --path=. --format=json --out-file=./infracost-base.json
 
       - name: configure infracost
         run: |
-          infracost comment github --path=/tmp/infracost.json \
-                                      --repo=$GITHUB_REPOSITORY \
-                                      --github-token=${{github.token}} \
-                                      --pull-request=${{github.event.pull_request.number}} \
-                                      --behavior=update
+          infracost comment github --path=./infracost.json --repo=$GITHUB_REPOSITORY --github-token=${{github.token}} --pull-request=${{github.event.pull_request.number}} --behavior=update
