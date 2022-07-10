@@ -1,12 +1,13 @@
 # This is a basic workflow to help you get started with Actions
 
-name: 
+name: infracost
 
 # Controls when the workflow will run
 on: [pull_request, push]
 env:
     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
     INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
+    ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
 # Allows you to run this workflow manually from the Actions tabworkflow_dispatch:
 
@@ -32,16 +33,21 @@ jobs:
           infracost configure set api_key $INFRACOST_API_KEY
           infracost configure set currency INR
 
-      - name: configure infracost
+      - name: Get Pull Request Number
         run: |
-          infracost breakdown --path=. \
-                              --format=json \
-                              --out-file=/tmp/infracost-base.json
+          echo $GITHUB_REF
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: configure infracost
         run: |
-          infracost comment github --path=/tmp/infracost.json \
-                                      --repo=$GITHUB_REPOSITORY \
-                                      --github-token=${{github.token}} \
-                                      --pull-request=${{github.event.pull_request.number}} \
-                                      --behavior=update
+          infracost breakdown --path=. --format=json --out-file=/tmp/infracost-base.json
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: comment infracost
+        run: |
+          infracost comment github --path /tmp/infracost-base.json --repo $GITHUB_REPOSITORY --pull-request 2 --github-token $GITHUB_TOKEN --behavior update
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
