@@ -79,6 +79,8 @@ resource "azurerm_network_interface" "jenkins" {
 
 resource "azurerm_virtual_machine" "jenkins" {
   name                  = "acctvm"
+  delete_data_disks_on_termination = true
+  delete_os_disk_on_termination    = true
   location              = azurerm_resource_group.jenkins.location
   resource_group_name   = azurerm_resource_group.jenkins.name
   network_interface_ids = [azurerm_network_interface.jenkins.id]
