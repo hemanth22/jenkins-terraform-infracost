@@ -34,4 +34,4 @@ jobs:
 
       - name: configure infracost
         run: |
-          infracost breakdown --path=. 
+          infracost breakdown --path=. --show-skipped
