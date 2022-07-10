@@ -3,7 +3,7 @@
 name: infracost
 
 # Controls when the workflow will run
-on: [pull_request]
+on: [pull_request, push]
 env:
     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
     INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
