@@ -38,4 +38,4 @@ jobs:
 
       - name: comment infracost
         run: |
-          infracost comment github --path infracost.json --repo $GITHUB_REPOSITORY --pull-request ${{ steps.pr.outputs.pull_request_number }} --github-token $GITHUB_TOKEN --behavior update
+          infracost comment github --path infracost.json --repo $GITHUB_REPOSITORY --pull-request ${{ github.event.number }} --github-token $GITHUB_TOKEN --behavior update
