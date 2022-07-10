@@ -15,6 +15,7 @@ env:
     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
     INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
     ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+    ACTIONS_STEP_DEBUG: true
 
 # Allows you to run this workflow manually from the Actions tabworkflow_dispatch:
 
