@@ -34,7 +34,9 @@ jobs:
           infracost configure set currency INR
 
       - name: Get Pull Request Number
-        run: echo ::set-env name=PULL_NUMBER::$(echo "$GITHUB_REF" | awk -F / '{print $3}')
+        run: |
+          echo ::set-env name=PULL_NUMBER::$(echo "$GITHUB_REF" | awk -F / '{print $3}')
+          echo $PULL_NUMBER
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -45,4 +47,4 @@ jobs:
 
       - name: comment infracost
         run: |
-          infracost comment github --path infracost.json --repo $GITHUB_REPOSITORY --pull-request ${{ PULL_NUMBER }} --github-token $GITHUB_TOKEN --behavior update
+          infracost comment github --path infracost.json --repo $GITHUB_REPOSITORY --pull-request $PULL_NUMBER --github-token $GITHUB_TOKEN --behavior update
