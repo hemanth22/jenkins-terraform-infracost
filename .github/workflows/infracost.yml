@@ -51,6 +51,15 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
+    # Generates an execution plan for Terraform
+      - name: Terraform Apply
+        run: terraform apply "jenkins.plan"
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
       # Runs a single command using the runners shell
       - name: Install infracost
         run: curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
@@ -77,6 +86,6 @@ jobs:
 
       - name: comment infracost
         run: |
-          infracost comment github --path /tmp/infracost-base.json --repo $GITHUB_REPOSITORY --pull-request 2 --github-token $GITHUB_TOKEN --behavior update
+          infracost comment github --path /tmp/infracost-base.json --repo $GITHUB_REPOSITORY --pull-request 3 --github-token $GITHUB_TOKEN --behavior update
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
