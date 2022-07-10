@@ -120,7 +120,7 @@ resource "azurerm_virtual_machine_extension" "jenkins" {
 
   settings = <<SETTINGS
     {
-        "commandToExecute": "wget -O azurejenkins.sh https://git.io/AzureJenkins && sh azurejenkins.sh"
+        "commandToExecute": "echo jenkins"
     }
 SETTINGS
 
