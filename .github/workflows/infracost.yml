@@ -32,10 +32,16 @@ jobs:
           infracost configure set api_key $INFRACOST_API_KEY
           infracost configure set currency INR
 
+      - name: Get Pull Request Number
+        id: pr
+        run: echo "::set-output name=pull_request_number::$(gh pr view --json number -q .number || echo "")"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: configure infracost
         run: |
           infracost breakdown --path=. --format=json --out-file=./infracost-base.json
 
       - name: comment infracost
         run: |
-          infracost comment github --path infracost.json --repo $GITHUB_REPOSITORY --pull-request ${{ github.event.number }} --github-token $GITHUB_TOKEN --behavior update
+          infracost comment github --path infracost.json --repo $GITHUB_REPOSITORY --pull-request ${{ pull_request_number }} --github-token $GITHUB_TOKEN --behavior update
