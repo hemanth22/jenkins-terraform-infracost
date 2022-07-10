@@ -7,7 +7,6 @@ on: [pull_request, push]
 env:
     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
     INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
-    PR_NUMBER: ${{ github.event.number }}
 
 # Allows you to run this workflow manually from the Actions tabworkflow_dispatch:
 
@@ -39,4 +38,4 @@ jobs:
 
       - name: comment infracost
         run: |
-          infracost comment github --path infracost.json --repo $GITHUB_REPOSITORY --pull-request $PR_NUMBER --github-token $GITHUB_TOKEN --behavior update
+          infracost comment github --path infracost.json --repo $GITHUB_REPOSITORY --pull-request ${{ steps.pr.outputs.pull_request_number }} --github-token $GITHUB_TOKEN --behavior update
