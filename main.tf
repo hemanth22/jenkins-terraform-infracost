@@ -84,7 +84,7 @@ resource "azurerm_virtual_machine" "jenkins" {
   location              = azurerm_resource_group.jenkins.location
   resource_group_name   = azurerm_resource_group.jenkins.name
   network_interface_ids = [azurerm_network_interface.jenkins.id]
-  vm_size               = "Standard_B1s"
+  vm_size               = "Standard_B2ms"
 
   storage_image_reference {
     publisher = "OpenLogic"
