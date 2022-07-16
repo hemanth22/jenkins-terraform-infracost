@@ -3,11 +3,19 @@
 name: infracost
 
 # Controls when the workflow will run
-on: [pull_request, push]
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '!main'
+
 env:
     SSH_AUTH_SOCK: /tmp/ssh_agent.sock
     INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
     ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+    ACTIONS_STEP_DEBUG: true
 
 # Allows you to run this workflow manually from the Actions tabworkflow_dispatch:
 
@@ -43,6 +51,15 @@ jobs:
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
+    # Generates an execution plan for Terraform
+      - name: Terraform Apply
+        run: terraform apply "jenkins.plan"
+        env:
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+
       # Runs a single command using the runners shell
       - name: Install infracost
         run: curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
@@ -56,6 +73,7 @@ jobs:
       - name: Get Pull Request Number
         run: |
           echo $GITHUB_REF
+          echo $GITHUB_REF | awk '{ $3 }'
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

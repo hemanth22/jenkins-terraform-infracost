@@ -79,10 +79,12 @@ resource "azurerm_network_interface" "jenkins" {
 
 resource "azurerm_virtual_machine" "jenkins" {
   name                  = "acctvm"
+  delete_data_disks_on_termination = true
+  delete_os_disk_on_termination    = true
   location              = azurerm_resource_group.jenkins.location
   resource_group_name   = azurerm_resource_group.jenkins.name
   network_interface_ids = [azurerm_network_interface.jenkins.id]
-  vm_size               = "Standard_B1s"
+  vm_size               = "Standard_B2ms"
 
   storage_image_reference {
     publisher = "OpenLogic"
@@ -118,7 +120,7 @@ resource "azurerm_virtual_machine_extension" "jenkins" {
 
   settings = <<SETTINGS
     {
-        "commandToExecute": "wget -O azurejenkins.sh https://git.io/AzureJenkins && sh azurejenkins.sh"
+        "commandToExecute": "echo jenkins"
     }
 SETTINGS
 
